@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Banking UI</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f2f4f8;
+    }
+
+    .bank-container {
+      background: white;
+      padding: 25px;
+      width: 360px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .balance-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #e8f0ff;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .balance-box h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .balance {
+      font-size: 22px;
+      font-weight: bold;
+      color: #1a4cff;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .deposit {
+      background: #28a745;
+    }
+
+    .withdraw {
+      background: #dc3545;
+    }
+
+    .message {
+      text-align: center;
+      font-weight: bold;
+      min-height: 20px;
+    }
+
+    /* 🔁 Responsive */
+    @media (max-width: 400px) {
+      .bank-container {
+        width: 90%;
+      }
+
+      .btn-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bank-container">
+    <div class="balance-box">
+      <h2>Balance</h2>
+      <div class="balance">₹<span id="balance">5000</span></div>
+    </div>
+
+    <div class="input-group">
+      <input type="number" id="amount" placeholder="Enter amount">
+    </div>
+
+    <div class="btn-group">
+      <button class="deposit" onclick="deposit()">Deposit</button>
+      <button class="withdraw" onclick="withdraw()">Withdraw</button>
+    </div>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    let balance = 5000;
+
+    function deposit() {
+      const amount = Number(document.getElementById("amount").value);
+      const message = document.getElementById("message");
+
+      if (amount <= 0 || isNaN(amount)) {
+        message.style.color = "red";
+        message.textContent = "Enter a valid deposit amount!";
+        return;
+      }
+
+      balance += amount;
+      updateUI("Deposit successful!", "green");
+    }
+
+    function withdraw() {
+      const amount = Number(document.getElementById("amount").value);
+      const message = document.getElementById("message");
+
+      if (amount <= 0 || isNaN(amount)) {
+        message.style.color = "red";
+        message.textContent = "Enter a valid withdrawal amount!";
+        return;
+      }
+
+      if (amount > balance) {
+        message.style.color = "red";
+        message.textContent = "Insufficient balance!";
+        return;
+      }
+
+      balance -= amount;
+      updateUI("Withdrawal successful!", "green");
+    }
+
+    function updateUI(msg, color) {
+      document.getElementById("balance").textContent = balance;
+      document.getElementById("message").style.color = color;
+      document.getElementById("message").textContent = msg;
+      document.getElementById("amount").value = "";
+    }
+  </script>
+
+</body>
+</html>
