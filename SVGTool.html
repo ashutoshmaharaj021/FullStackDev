@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SVG Drawing Tool</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 15px 0 5px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+
+    button {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+      font-size: 14px;
+    }
+
+    button:hover {
+      background: #1e40af;
+    }
+
+    .canvas-wrapper {
+      width: 90vw;
+      height: 70vh;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+      overflow: hidden;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+    }
+
+    .footer {
+      margin: 10px;
+      font-size: 13px;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>SVG Drawing Tool</h1>
+
+  <div class="toolbar">
+    <label>
+      Color:
+      <input type="color" id="colorPicker" value="#000000">
+    </label>
+    <button id="undoBtn">Undo</button>
+    <button id="clearBtn">Clear</button>
+  </div>
+
+  <div class="canvas-wrapper">
+    <svg id="svgCanvas" viewBox="0 0 1000 600"></svg>
+  </div>
+
+  <p class="footer">Draw using mouse • SVG based • Responsive</p>
+
+  <script>
+    const svg = document.getElementById("svgCanvas");
+    const colorPicker = document.getElementById("colorPicker");
+    const undoBtn = document.getElementById("undoBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    let drawing = false;
+    let currentPath = null;
+    let paths = [];
+
+    function getMousePosition(evt) {
+      const rect = svg.getBoundingClientRect();
+      return {
+        x: (evt.clientX - rect.left) * (1000 / rect.width),
+        y: (evt.clientY - rect.top) * (600 / rect.height)
+      };
+    }
+
+    svg.addEventListener("mousedown", (e) => {
+      drawing = true;
+      const pos = getMousePosition(e);
+
+      currentPath = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "path"
+      );
+
+      currentPath.setAttribute(
+        "d",
+        `M ${pos.x} ${pos.y}`
+      );
+      currentPath.setAttribute("stroke", colorPicker.value);
+      currentPath.setAttribute("stroke-width", "3");
+      currentPath.setAttribute("fill", "none");
+      currentPath.setAttribute("stroke-linecap", "round");
+
+      svg.appendChild(currentPath);
+      paths.push(currentPath);
+    });
+
+    svg.addEventListener("mousemove", (e) => {
+      if (!drawing) return;
+      const pos = getMousePosition(e);
+      const d = currentPath.getAttribute("d");
+      currentPath.setAttribute(
+        "d",
+        `${d} L ${pos.x} ${pos.y}`
+      );
+    });
+
+    svg.addEventListener("mouseup", () => {
+      drawing = false;
+      currentPath = null;
+    });
+
+    svg.addEventListener("mouseleave", () => {
+      drawing = false;
+      currentPath = null;
+    });
+
+    undoBtn.addEventListener("click", () => {
+      const last = paths.pop();
+      if (last) svg.removeChild(last);
+    });
+
+    clearBtn.addEventListener("click", () => {
+      paths.forEach(p => svg.removeChild(p));
+      paths = [];
+    });
+  </script>
+
+</body>
+</html>
