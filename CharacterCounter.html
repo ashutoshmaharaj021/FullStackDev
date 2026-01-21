@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Character Counter</title>
+
+  <style>
+    /* ===== RESET ===== */
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+
+    /* ===== CARD ===== */
+    .container {
+      background: #ffffff;
+      width: 90%;
+      max-width: 520px;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 15px;
+    }
+
+    /* ===== TEXTAREA ===== */
+    textarea {
+      width: 100%;
+      height: 140px;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 2px solid #ddd;
+      resize: none;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    textarea:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+    }
+
+    /* ===== COUNTER ===== */
+    .counter {
+      margin-top: 10px;
+      text-align: right;
+      font-size: 14px;
+      color: #4f46e5;
+      transition: color 0.3s ease;
+    }
+
+    .counter.warning {
+      color: #f59e0b;
+    }
+
+    .counter.danger {
+      color: #dc2626;
+      font-weight: bold;
+    }
+
+    /* ===== FOOTER TEXT ===== */
+    .hint {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #777;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h2>Live Character Counter</h2>
+    <p class="subtitle">Write something meaningful ✍️</p>
+
+    <textarea
+      id="textInput"
+      placeholder="Start typing your message here..."
+      maxlength="150"
+    ></textarea>
+
+    <div id="counter" class="counter">
+      0 / 150 characters
+    </div>
+
+    <p class="hint">Tip: Stay within the character limit.</p>
+  </div>
+
+  <script>
+    const textInput = document.getElementById("textInput");
+    const counter = document.getElementById("counter");
+    const maxChars = 150;
+
+    textInput.addEventListener("input", () => {
+      const length = textInput.value.length;
+      counter.textContent = `${length} / ${maxChars} characters`;
+
+      counter.classList.remove("warning", "danger");
+
+      if (length >= maxChars - 10 && length < maxChars) {
+        counter.classList.add("warning");
+      } else if (length === maxChars) {
+        counter.classList.add("danger");
+      }
+    });
+  </script>
+
+</body>
+</html>
