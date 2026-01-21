@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dynamic Product Filter</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+   body {
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  background: linear-gradient(
+    135deg,
+    #0f172a,
+    #1e293b
+  );
+
+  color: #e5e7eb;
+}
+
+
+
+    h1 {
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #6b7280;
+      margin-bottom: 25px;
+    }
+
+    /* ===== CONTROLS ===== */
+    .controls {
+      max-width: 700px;
+      margin: 0 auto 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    select {
+      padding: 10px;
+      font-size: 15px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      outline: none;
+      background: white;
+    }
+
+    /* ===== PRODUCT GRID ===== */
+    .products {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: white;
+      padding: 18px;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeUp 0.4s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+    }
+
+    .card h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+    }
+
+    .category {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+
+    .desc {
+      font-size: 14px;
+      color: #4b5563;
+      margin-bottom: 10px;
+    }
+
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .price {
+      font-weight: bold;
+      font-size: 16px;
+      color: #2563eb;
+    }
+
+    .rating {
+      font-size: 14px;
+      color: #f59e0b;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Dynamic Product Filter</h1>
+  <p class="subtitle">Browse and sort products in real time</p>
+
+  <!-- Controls -->
+  <div class="controls">
+    <label for="categoryFilter">Category</label>
+    <select id="categoryFilter">
+      <option value="all">All Categories</option>
+      <option value="electronics">Electronics</option>
+      <option value="accessories">Accessories</option>
+      <option value="home">Home</option>
+    </select>
+
+    <label for="sortFilter">Sort</label>
+    <select id="sortFilter">
+      <option value="default">Sort By</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+      <option value="name">Name: A to Z</option>
+    </select>
+  </div>
+
+  <!-- Product Grid -->
+  <div id="productContainer" class="products"></div>
+
+  <p class="footer">Responsive • Dynamic • Classy UI</p>
+
+  <script>
+    const products = [
+      {
+        name: "Laptop Pro 14",
+        category: "electronics",
+        price: 78000,
+        rating: 4.6,
+        desc: "High-performance laptop for professionals."
+      },
+      {
+        name: "Wireless Headphones",
+        category: "electronics",
+        price: 3200,
+        rating: 4.3,
+        desc: "Noise-cancelling over-ear headphones."
+      },
+      {
+        name: "Smartphone X",
+        category: "electronics",
+        price: 42000,
+        rating: 4.5,
+        desc: "Sleek design with powerful performance."
+      },
+      {
+        name: "Mechanical Keyboard",
+        category: "accessories",
+        price: 2800,
+        rating: 4.4,
+        desc: "Tactile keys for coding and gaming."
+      },
+      {
+        name: "Wireless Mouse",
+        category: "accessories",
+        price: 1200,
+        rating: 4.2,
+        desc: "Ergonomic mouse with smooth tracking."
+      },
+      {
+        name: "LED Monitor 24\"",
+        category: "electronics",
+        price: 13500,
+        rating: 4.4,
+        desc: "Full HD display with vibrant colors."
+      },
+      {
+        name: "Desk Lamp",
+        category: "home",
+        price: 950,
+        rating: 4.1,
+        desc: "Minimal LED lamp with brightness control."
+      },
+      {
+        name: "Office Chair",
+        category: "home",
+        price: 8900,
+        rating: 4.3,
+        desc: "Comfortable chair for long work sessions."
+      }
+    ];
+
+    const container = document.getElementById("productContainer");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const sortFilter = document.getElementById("sortFilter");
+
+    function renderProducts(list) {
+      container.innerHTML = "";
+      list.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <h3>${p.name}</h3>
+          <div class="category">${p.category.toUpperCase()}</div>
+          <div class="desc">${p.desc}</div>
+          <div class="bottom">
+            <div class="price">₹${p.price}</div>
+            <div class="rating">⭐ ${p.rating}</div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function applyFilters() {
+      let filtered = [...products];
+
+      const category = categoryFilter.value;
+      const sort = sortFilter.value;
+
+      if (category !== "all") {
+        filtered = filtered.filter(p => p.category === category);
+      }
+
+      if (sort === "low") {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sort === "high") {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sort === "name") {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      renderProducts(filtered);
+    }
+
+    categoryFilter.addEventListener("change", applyFilters);
+    sortFilter.addEventListener("change", applyFilters);
+
+    renderProducts(products);
+  </script>
+
+</body>
+</html>
