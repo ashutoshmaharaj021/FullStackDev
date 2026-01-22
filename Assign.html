@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ashutosh | Engineer Dashboard</title>
+
+  <style>
+    /* ===== GLOBAL ===== */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #f1f5f9, #e0e7ff);
+      color: #0f172a;
+    }
+
+    a {
+      text-decoration: none;
+      color: #2563eb;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #e5e7eb;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 38px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin-top: 8px;
+      font-size: 15px;
+      opacity: 0.85;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      background: #020617;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: #c7d2fe;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    nav a:hover {
+      color: #93c5fd;
+    }
+
+    /* ===== MAIN ===== */
+    main {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* ===== CARD ===== */
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.12);
+      margin-bottom: 35px;
+      border: 1px solid #e5e7eb;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.18);
+    }
+
+    .card h2 {
+      margin-bottom: 10px;
+      font-size: 26px;
+    }
+
+    /* ===== HOME ===== */
+    #home h2 {
+      color: #2563eb;
+    }
+
+    /* ===== ABOUT ===== */
+    #about h2 {
+      color: #7c3aed;
+    }
+
+    .highlight {
+      color: #2563eb;
+      font-weight: 600;
+    }
+
+    /* ===== CONTACT ===== */
+    #contact h2 {
+      color: #0f766e;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 18px;
+      margin-top: 15px;
+    }
+
+    .contact-item {
+      background: #f8fafc;
+      padding: 15px;
+      border-radius: 10px;
+      border-left: 5px solid #0f766e;
+      font-size: 14px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #020617;
+      color: #94a3b8;
+      text-align: center;
+      padding: 18px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <h1>Ashutosh Maharaj</h1>
+    <p>Student • AI & ML Enthusiast • Aspiring Software Engineer</p>
+  </header>
+
+  <!-- ===== NAV ===== -->
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main>
+
+    <!-- HOME -->
+    <section id="home" class="card">
+      <h2>Home</h2>
+      <p>
+        Welcome to my professional dashboard 👋  
+        This website showcases my academic background, interests, and growing skills
+        in <span class="highlight">Computer Science, AI & ML, and Web Development</span>.
+      </p>
+      <p>
+        I focus on building strong fundamentals, practical projects, and continuously
+        improving my technical and problem-solving abilities.
+      </p>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="card">
+      <h2>About Me</h2>
+      <p>
+        My name is <span class="highlight">Ashutosh Maharaj</span>. I am a student pursuing
+        <span class="highlight">Computer Science with a specialization in Artificial Intelligence and Machine Learning</span>.
+      </p>
+      <p>
+        I actively explore programming, data structures, web development, and AI concepts.
+        I enjoy converting theory into hands-on projects and improving my engineering mindset.
+      </p>
+      <p>
+        My goal is to become a skilled software engineer with strong problem-solving,
+        analytical thinking, and real-world development experience.
+      </p>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="card">
+      <h2>Contact</h2>
+
+      <div class="contact-grid">
+        <div class="contact-item">
+          <strong>Name:</strong> Ashutosh Maharaj
+        </div>
+
+        <div class="contact-item">
+          <strong>Email:</strong>
+          <a href="mailto:ashutoshmaharaj432@gmail.com">
+            ashutoshmaharaj432@gmail.com
+          </a>
+        </div>
+
+        <div class="contact-item">
+          <strong>Phone:</strong>
+          <a href="tel:+919038295527">+91 9038295527</a>
+        </div>
+
+        <div class="contact-item">
+          <strong>GitHub:</strong>
+          <a href="https://github.com/ashutoshmaharaj021" target="_blank">
+            github.com/ashutoshmaharaj021
+          </a>
+        </div>
+
+        <div class="contact-item">
+          <strong>LinkedIn:</strong>
+          <a href="https://linkedin.com/in/ashutoshmaharaj" target="_blank">
+            linkedin.com/in/ashutoshmaharaj
+          </a>
+        </div>
+
+        <div class="contact-item">
+          <strong>Location:</strong> India
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    &copy; 2026 Ashutosh Maharaj • Engineer Dashboard
+  </footer>
+
+</body>
+</html>
